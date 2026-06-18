@@ -4,63 +4,58 @@ import { Link, useNavigate } from 'react-router'
 import { useState } from 'react'
 import { useAuth } from '../hooks/useAuth'
 
-const register = () => {
-
+const Register = () => {
     const navigate = useNavigate()
-    const { loading, handleRegister } = useAuth()
+    const { handleRegister } = useAuth()
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [error, setError] = useState(null)
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setError(null)
+        setIsSubmitting(true)
 
         try {
             await handleRegister({ username, email, password })
             navigate("/");
-        }
-        catch (err) {
-            console.log(err.response?.data?.message);
+        } catch (err) {
+            setError(err.response?.data?.message || "Registration failed. Please try again.")
+        } finally {
+            setIsSubmitting(false)
         }
     }
-
-    if (loading) {
-        return <h1 className="loading" > Loading ..... </h1>
-    }
-
 
     return (
-
         <main>
-
             <div className='form-container'>
                 <h1>Register</h1>
 
                 <form onSubmit={handleSubmit} className='registerForm'>
-                    <label htmlFor="email">Email</label>
-                    <input onChange={(e) => setEmail(e.target.value)} type="email" id='email' name='email' placeholder='Enter your email ' />
+                    {error && <div className="error-message">{error}</div>}
 
+                    <label htmlFor="email">Email</label>
+                    <input onChange={(e) => setEmail(e.target.value)} type="email" id='email' name='email' placeholder='Enter your email' required />
 
                     <label htmlFor="username">Username</label>
-                    <input onChange={(e) => setUsername(e.target.value)} type="text" id='username' name='username' placeholder='Enter your username' />
+                    <input onChange={(e) => setUsername(e.target.value)} type="text" id='username' name='username' placeholder='Enter your username' required />
 
                     <label htmlFor="password">Password</label>
-                    <input onChange={(e) => setPassword(e.target.value)} type="password" id='password' name='password' placeholder='Enter a password' />
+                    <input onChange={(e) => setPassword(e.target.value)} type="password" id='password' name='password' placeholder='Enter a password' required />
 
-                    <button className='registerButton'>Submit</button>
+                    <button type="submit" className='registerButton' disabled={isSubmitting}>
+                        {isSubmitting ? "Registering..." : "Submit"}
+                    </button>
 
                     <p className="auth-link">
                         Already have an account? <Link to={"/login"}>Login</Link>
                     </p>
-
                 </form>
-
-
-
-
             </div>
         </main>
     )
 }
 
-export default register
+export default Register

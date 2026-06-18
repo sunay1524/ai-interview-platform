@@ -25,6 +25,17 @@ main {
   margin-bottom: 25px;
 }
 
+.error-message {
+  background-color: #fee2e2;
+  color: #ef4444;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #fca5a5;
+}
+
 .registerForm {
   display: flex;
   flex-direction: column;
