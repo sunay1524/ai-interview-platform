@@ -1,9 +1,11 @@
 import axios from "axios"
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export async function register({username , email , password})
 {
     try{
-    const response = await axios.post("http://localhost:3000/api/auth/register" , {username , email ,password} ,{
+    const response = await axios.post(`${API_URL}/auth/register` , {username , email ,password} ,{
         withCredentials:true
     })
 
@@ -19,7 +21,7 @@ export async function register({username , email , password})
 export async function login({email , password})
 {
     try{
-    const response = await axios.post("http://localhost:3000/api/auth/login" , {email ,password} ,{
+    const response = await axios.post(`${API_URL}/auth/login` , {email ,password} ,{
         withCredentials:true
     })
 
@@ -34,7 +36,7 @@ export async function login({email , password})
 
 export async function getMe() {
     try {
-        const response = await axios.get("http://localhost:3000/api/auth/me", {
+        const response = await axios.get(`${API_URL}/auth/me`, {
             withCredentials: true
         })
         return response.data;
@@ -45,7 +47,7 @@ export async function getMe() {
 
 export async function logoutApi() {
     try {
-        const response = await axios.post("http://localhost:3000/api/auth/logout", {}, {
+        const response = await axios.post(`${API_URL}/auth/logout`, {}, {
             withCredentials: true
         })
         return response.data;

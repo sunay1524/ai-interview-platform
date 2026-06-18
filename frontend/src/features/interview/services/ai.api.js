@@ -1,8 +1,10 @@
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export async function generateInterviewReport({ resume, selfDescription, jobDescription }) {
     try {
-        const response = await axios.post("http://localhost:3000/api/ai/generate-report", {
+        const response = await axios.post(`${API_URL}/ai/generate-report`, {
             resume,
             selfDescription,
             jobDescription
