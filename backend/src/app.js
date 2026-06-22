@@ -14,8 +14,21 @@ app.use(cors({
 
 
 const mongoose = require("mongoose");
+const connectDb = require("./config/database");
+
 app.use(express.json())
 app.use(cookieParser())
+
+// Ensure DB is connected before handling requests
+app.use(async (req, res, next) => {
+    try {
+        await connectDb();
+        next();
+    } catch (err) {
+        console.error("DB connection error:", err);
+        res.status(500).json({ message: "Database connection failed", error: err.message });
+    }
+});
 app.use("/api/auth" , authRouter)
 app.use("/api/ai", aiRouter)
 
