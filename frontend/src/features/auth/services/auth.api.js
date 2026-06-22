@@ -2,37 +2,33 @@ import axios from "axios"
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export async function register({username , email , password})
-{
-    try{
-    const response = await axios.post(`${API_URL}/auth/register` , {username , email ,password} ,{
-        withCredentials:true
-    })
+export async function register({ username, email, password }) {
+    try {
+        const response = await axios.post(`${API_URL}/auth/register`, { username, email, password }, {
+            withCredentials: true
+        })
 
-    return response.data
-}
-    catch(err)
-    {
+        return response.data
+    }
+    catch (err) {
         console.log(err)
     }
-}   
-
-
-export async function login({email , password})
-{
-    try{
-    const response = await axios.post(`${API_URL}/auth/login` , {email ,password} ,{
-        withCredentials:true
-    })
-
-    return response.data
 }
-    catch(err)
-    {
+
+
+export async function login({ email, password }) {
+    try {
+        const response = await axios.post(`${API_URL}/auth/login`, { email, password }, {
+            withCredentials: true
+        })
+
+        return response.data
+    }
+    catch (err) {
         console.log(err)
         throw err;
     }
-}   
+}
 
 export async function getMe() {
     try {
